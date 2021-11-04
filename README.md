@@ -6,7 +6,7 @@ A weak reference to an object is a reference that does not prevent the object fr
 
 > Flyweight is a structural design pattern that lets you fit more objects into the available amount of RAM by sharing common parts of state between multiple objects instead of keeping all of the data in each object.
 >
-> – [Refacrtoring Guru](https://refactoring.guru/design-patterns/flyweight)
+> – [Refactoring Guru](https://refactoring.guru/design-patterns/flyweight)
 
 The `WeakFlyweightSet` is based on [Set](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set), [WeakRef](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakRef) and [FinalizationRegistry](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/FinalizationRegistry) objects.
 
