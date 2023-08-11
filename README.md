@@ -49,6 +49,12 @@ set.use({key1: 'value: 1', key2: 'value: 2'});
 
 ## API
 
+#### size: number
+
+Returns the number of values in the `WeakFlyweightSet` object.
+
+> :warning: Number of values is not precise due to nature of `FinalizationRegistry` object.
+
 #### add(object): this
 
 The `add()` method adds an object to a `WeakFlyweightSet` object.
