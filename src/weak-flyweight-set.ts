@@ -1,10 +1,13 @@
 export class WeakFlyweightSet<V extends object> {
+  #size: number;
   #set: Set<WeakRef<V>>;
   #registry: FinalizationRegistry<WeakRef<V>>;
 
   constructor() {
+    this.#size = 0;
     this.#set = new Set();
     this.#registry = new FinalizationRegistry((heldValue) => {
+      this.#size--;
       this.#set.delete(heldValue);
     });
   }
@@ -82,6 +85,7 @@ export class WeakFlyweightSet<V extends object> {
     if (typeof oldRef === 'undefined') {
       const ref = new WeakRef<V>(object);
 
+      this.#size++;
       this.#set.add(ref);
       this.#registry.register(object, ref);
     }
@@ -102,6 +106,7 @@ export class WeakFlyweightSet<V extends object> {
       this.#registry.unregister(refObject);
     }
 
+    this.#size--;
     return this.#set.delete(ref);
   }
 
@@ -114,6 +119,7 @@ export class WeakFlyweightSet<V extends object> {
       }
     }
 
+    this.#size = 0;
     this.#set.clear();
   }
 
@@ -154,5 +160,9 @@ export class WeakFlyweightSet<V extends object> {
       },
       next,
     };
+  }
+
+  get size() {
+    return this.#size;
   }
 }

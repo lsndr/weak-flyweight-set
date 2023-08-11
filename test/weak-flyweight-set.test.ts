@@ -23,6 +23,7 @@ describe('WeakFlyweightSet', () => {
 
     set.add(valueObject);
 
+    expect(set.size).toBe(1);
     expect(set.has(similarValueObject)).toBeTruthy();
     expect(set.has(valueObject)).toBeTruthy();
 
@@ -40,6 +41,7 @@ describe('WeakFlyweightSet', () => {
     set.add(valueObject1);
     set.add(valueObject2);
 
+    expect(set.size).toBe(2);
     expect(set.has(valueObject1)).toBeTruthy();
     expect(set.has(valueObject2)).toBeTruthy();
 
@@ -67,6 +69,7 @@ describe('WeakFlyweightSet', () => {
     set.add(valueObject);
     set.add(similarValueObject);
 
+    expect(set.size).toBe(1);
     expect(set.get(valueObject)).toBe(valueObject);
     expect(set.get(similarValueObject)).toBe(valueObject);
   });
@@ -77,6 +80,7 @@ describe('WeakFlyweightSet', () => {
 
     set.add(valueObject);
 
+    expect(set.size).toBe(1);
     expect(set.has(valueObject)).toBeTruthy();
     expect(set.has(similarValueObject)).toBeTruthy();
 
@@ -88,6 +92,8 @@ describe('WeakFlyweightSet', () => {
       gc();
 
       try {
+        // TODO: Find a way to 100% call FinalizationRegistry callback without mocking it
+        // expect(set.size).toBe(1);
         expect(set.has(similarValueObject)).toBeFalsy();
         expect(set.get(similarValueObject)).toBeUndefined();
 
@@ -108,6 +114,7 @@ describe('WeakFlyweightSet', () => {
 
     set.add(valueObject);
 
+    expect(set.size).toBe(1);
     expect(set.has(valueObject)).toBeTruthy();
     expect(set.has(similarValueObject)).toBeTruthy();
 
@@ -117,6 +124,7 @@ describe('WeakFlyweightSet', () => {
       gc();
 
       try {
+        expect(set.size).toBe(1);
         expect(set.has(valueObject)).toBeTruthy();
         expect(set.has(similarValueObject)).toBeTruthy();
         expect(set.get(valueObject)).toBe(valueObject);
@@ -139,9 +147,11 @@ describe('WeakFlyweightSet', () => {
 
     set.add(valueObject);
 
+    expect(set.size).toBe(1);
     expect(set.has(valueObject)).toBeTruthy();
     expect(set.has(similarValueObject)).toBeTruthy();
     expect(set.delete(similarValueObject)).toBeTruthy();
+    expect(set.size).toBe(0);
     expect(set.has(valueObject)).toBeFalsy();
     expect(set.has(similarValueObject)).toBeFalsy();
   });
@@ -150,6 +160,7 @@ describe('WeakFlyweightSet', () => {
     const valueObject = { key1: 'value1' };
     const similarValueObject = { key1: 'value1' };
 
+    expect(set.size).toBe(0);
     set.add(valueObject);
 
     expect(set.has(valueObject)).toBeTruthy();
@@ -158,6 +169,7 @@ describe('WeakFlyweightSet', () => {
 
     set.clear();
 
+    expect(set.size).toBe(0);
     expect(set.has(valueObject)).toBeFalsy();
     expect(set.has(similarValueObject)).toBeFalsy();
     expect(Array.from(set.values()).length).toBe(0);
@@ -173,6 +185,7 @@ describe('WeakFlyweightSet', () => {
     const values = Array.from(set.values());
 
     expect(values.length).toBe(2);
+    expect(set.size).toBe(2);
     expect(values[0]).toBe(valueObject1);
     expect(values[1]).toBe(valueObject2);
   });
